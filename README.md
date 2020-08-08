@@ -1,4 +1,4 @@
-# Midterm Project: EasyCook
+# Final Project: EasyCook
 
 **Team Members**: Earl Jay Caoile, Shubham Majumdar, Tammy Ip
 
