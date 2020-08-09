@@ -1,0 +1,54 @@
+$padding: 20px;
+
+
+#root {
+    font-family: Arial;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header , footer {
+    background-color:black;
+    color:white;
+    width: 40;
+  }
+
+  .counter {
+    background-color: grey;
+    font: size 40;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .count {
+        min-width: $padding;
+        font-size: 20;
+    }
+
+    .down { 
+        padding: $padding; 
+        width:$padding;
+        margin-right:$padding;
+    }
+
+    .up { 
+        padding: $padding;
+        width:$padding;
+        margin-left: $padding;
+    }
+
+    .clicker {
+
+        border: solid;
+        color: white;
+        padding: $padding - 15;
+        text-align: center;
+        display: inline-block;
+    
+        &:hover {
+          background-color:black;
+        }
+      }
+  }
