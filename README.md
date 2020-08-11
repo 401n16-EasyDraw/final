@@ -4,16 +4,12 @@
 
 ## Project description
 
-Our application lets an user search for a recipe, add arecipe, remove arecipe and add a recipes to favourites.
+Our application lets an user search for a recipe, add a recipe, remove arecipe and add a recipes to favourites.
 Also usr is capable of creating an account and save recipes. The user should be capable of clicking on a link that will lead to purchase the ingredients on the recipe.
 
 ### Links and Resources
 
-
-
 ### Documentation
-
-
 
 ### Setup
 
