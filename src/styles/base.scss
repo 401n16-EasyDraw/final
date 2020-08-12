@@ -71,7 +71,7 @@ code {
 
 #main-header,
 #main-footer {
-  min-height: 10vh;
+  min-height: 7.5vh;
   display: flex;
   box-sizing: border-box;
 }
@@ -83,32 +83,30 @@ code {
 }
 
 #main-content {
-  min-height: 80vh;
-  padding: $spacing * 2.5;
+  min-height: 87.5vh;
+  padding: $spacing * 6 $spacing * 2.5;
   box-sizing: border-box;
-  margin: 10vh 5% auto;
+  margin: 5vh 5% auto;
 
   @media (min-width: 1200px) {
-    margin: 10vh 7.5% auto;
+    margin: 5vh 7.5% auto;
   }
 
   @media (min-width: 1920px) {
-    margin: 10vh 10% auto;
+    margin: 5vh 10% auto;
   }
 
   @media (max-width: 768px) {
     margin: 0;
-    margin-top: 10vh;
-    padding: $spacing * 2.5 $spacing;
+    margin-top: 5vh;
   }
 
-  @media (max-width: 314px) {
-    margin: 0;
-    margin-top: 12vh;
+  @media (max-width: 420px) {
+    margin-top: 7vh;
   }
 
-  @media (max-height: 1080px) {
-    margin-top: $spacing * 8;
+  .cont-child {
+    margin: 2em auto;
   }
 }
 
