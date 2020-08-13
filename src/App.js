@@ -1,4 +1,7 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import store from './store';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 import RecipeList from './components/RecipeList';
@@ -8,13 +11,15 @@ import './styles/base.scss';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <div id="main-content">
-        <RecipeList />
-      </div>
-      <Footer />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Header />
+        <div id="main-content">
+          <RecipeList />
+        </div>
+        <Footer />
+      </BrowserRouter>
+    </Provider>
   );
 }
 

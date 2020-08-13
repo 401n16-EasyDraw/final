@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-// import cartSlice from './cart-slice.js';
+import recipeSlice from './recipe-slice.js';
 // import productSlice from './product-slice.js';
 // import categorySlice from './category-slice.js';
 // import { enableMapSet } from 'immer';
@@ -11,7 +11,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // });
 
 const reducers = combineReducers({
-  // recipeStore: recipeSlice,
+  recipeStore: recipeSlice,
   // userStore: userSlice,
 });
 

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-require('dotenv').config();
 
 const recipeSlice = createSlice({
   name: 'recipeStore',
@@ -22,9 +21,13 @@ const recipeSlice = createSlice({
 export const { getRecipes } = recipeSlice.actions;
 
 export const searchRecipes = (query) => async (dispatch) => {
+  // console.log('What is query now?', query);
   const response = await axios.get(
-    `https://api.edamam.com/search?q=${query}&app_id=${process.env.APP_ID}&app_key=${process.env.APP_KEY}`
+    `https://api.edamam.com/search?q=${query}&app_id=05546976&app_key=80865f8853944e5a74067e9647dabd80`
   );
 
-  dispatch(getRecipes(response.data.results));
+  console.log('did we get a response?', response.data);
+  dispatch(getRecipes(response.data.hits));
 };
+
+export default recipeSlice.reducer;
