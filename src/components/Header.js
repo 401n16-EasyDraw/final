@@ -68,7 +68,7 @@ function Header(props) {
             onChange={(e) => setQuery(e.target.value)}
           />
           <Button variant="outline-dark" onClick={() => searchRecipes(query)}>
-            Search`
+            Search
           </Button>
         </Form>
       </Navbar>
@@ -78,7 +78,7 @@ function Header(props) {
 
 const mapStateToProps = (state) => {
   return {
-    recipes: state.recipeStore.recipes,
+    searchResults: state.recipeStore.searchResults,
   };
 };
 
