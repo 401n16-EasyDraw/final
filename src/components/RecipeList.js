@@ -10,7 +10,7 @@ function RecipeList(props) {
     const { recipe } = hit;
 
     recipesToRender.push(
-      <Col item xs={12} md={6} xl={3} key={i}>
+      <Col className="mb-4" item xs={12} md={6} lg={4} xl={3} key={i}>
         <Card>
           <Card.Img variant="top" src={recipe.image} />
           <Card.Body>
