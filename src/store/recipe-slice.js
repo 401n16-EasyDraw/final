@@ -5,14 +5,14 @@ const recipeSlice = createSlice({
   name: 'recipeStore',
 
   initialState: {
-    recipes: [],
+    searchResults: [],
     query: '',
   },
 
   reducers: {
     getRecipes: (state, action) => {
       const { payload } = action;
-      state.recipes = payload.results;
+      state.searchResults = payload.searchResults;
       state.query = payload.query;
     },
   },
@@ -21,13 +21,11 @@ const recipeSlice = createSlice({
 export const { getRecipes } = recipeSlice.actions;
 
 export const searchRecipes = (query) => async (dispatch) => {
-  // console.log('What is query now?', query);
   const response = await axios.get(
     `https://api.edamam.com/search?q=${query}&app_id=05546976&app_key=80865f8853944e5a74067e9647dabd80`
   );
 
-  console.log('did we get a response?', response.data);
-  dispatch(getRecipes(response.data.hits));
+  dispatch(getRecipes({ searchResults: response.data.hits, query }));
 };
 
 export default recipeSlice.reducer;

@@ -39,7 +39,6 @@ function Header(props) {
     );
   }
 
-  console.log('What is query now?', query);
   return (
     <>
       <Navbar id="main-header" variant="dark" expand="md" expanded={expanded}>
@@ -69,7 +68,7 @@ function Header(props) {
             onChange={(e) => setQuery(e.target.value)}
           />
           <Button variant="outline-dark" onClick={() => searchRecipes(query)}>
-            Search
+            Search`
           </Button>
         </Form>
       </Navbar>
