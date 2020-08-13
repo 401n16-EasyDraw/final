@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/header.scss';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 /**
@@ -50,6 +50,10 @@ function Header() {
             <>{navLinks}</>
           </Nav>
         </Navbar.Collapse>
+        <Form inline>
+          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+          <Button variant="outline-info">Search</Button>
+        </Form>
       </Navbar>
     </>
   );
