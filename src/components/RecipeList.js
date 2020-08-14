@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import LoadingSpinner from './LoadingSpinner';
 import { Card, CardDeck, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { setActiveRecipe } from '../store/recipe-slice.js';
 
 function RecipeList(props) {
-  const { searchResults } = props;
+  const { searchResults, setActiveRecipe } = props;
   const recipesToRender = [];
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,10 +41,18 @@ function RecipeList(props) {
           <Card.Body>
             <Card.Title>{recipe.label}</Card.Title>
             <Card.Text>Source: {recipe.source}</Card.Text>
-            <Card.Text>View Details</Card.Text>
+            <Card.Text
+              onClick={(e) => {
+                setActiveRecipe(recipe);
+              }}
+            >
+              <Button className="btn-block" variant="info">
+                View Details
+              </Button>
+            </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <Button>Save to Favorites</Button>
+            <Button className="btn-block">Save to Favorites</Button>
           </Card.Footer>
         </Card>
       </Col>
@@ -52,8 +61,13 @@ function RecipeList(props) {
 
   return isLoading ? (
     <LoadingSpinner />
-  ) : (
+  ) : recipesToRender.length ? (
     <CardDeck>{recipesToRender}</CardDeck>
+  ) : (
+    <>
+      <h2>Nothing to display! :(</h2>
+      <p>Search for recipes with the search bar above!</p>
+    </>
   );
 }
 
@@ -63,4 +77,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(RecipeList);
+const mapDispatchToProps = {
+  setActiveRecipe,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
