@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { setActiveRecipe } from '../store/recipe-slice.js';
 import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
+import { searchRecipes } from '../store/recipe-slice';
 
 function RecipeList(props) {
-  const { searchResults, setActiveRecipe, query } = props;
+  const { searchResults, setActiveRecipe, query, searchRecipes } = props;
   const recipesToRender = [];
   const [isLoading, setIsLoading] = useState(false);
 
@@ -69,36 +70,36 @@ function RecipeList(props) {
     <CardDeck>{recipesToRender}</CardDeck>
   ) : (
         <>
-          <h2>{query ? 'Nothing to display! :(' : 'Let\'s start cooking!'}</h2>
+          <h2 className="italic">{query ? 'Nothing to display! :(' : 'Let\'s start cooking!'}</h2>
           <p>Search for recipes with the search bar above!</p>
-          {/* 
-          <Col className="mb-4" xs={6} md={4} style={{ height: '15vw', width: '100%' }}>
-            <Card>
-              <Image src="https://natashaskitchen.com/wp-content/uploads/2019/02/Greek-Salad-600x900.jpg" /></Card>
-          </Col>
-          <Col className="mb-4" xs={6} md={4} style={{ height: '15vw', width: '100%' }}>
-            <Card>
-              <Image src="https://detoxinista.com/wp-content/uploads/2019/07/detox-smoothie-recipe.jpg" /></Card></Col>
-          <Col className="mb-4" xs={6} md={4} style={{ height: '15vw', width: '100%' }}>
-            <Card>
-              <Image src="https://www.cookingclassy.com/wp-content/uploads/2017/02/skillet-seared-salmon-2.jpg" /></Card>
-          </Col> */}
+          <hr className="dotted-line" />
 
-          <MDBContainer className="mt-5">
-            <MDBRow>
-              <MDBCol lg="4" md="12" className="mb-4">
-                <img src="https://natashaskitchen.com/wp-content/uploads/2019/02/Greek-Salad-600x900.jpg" className="img-fluid z-depth-1" alt="" />
-              </MDBCol>
-              <MDBCol lg="4" md="6" className="mb-4">
-                <img src="https://i.pinimg.com/564x/5e/b7/7c/5eb77c0036e60a20503bb306d43debf6.jpg" className="img-fluid z-depth-1-half"
-                  alt="" />
-              </MDBCol>
-              <MDBCol lg="4" md="6" className="mb-4">
-                <img src="https://www.cookingclassy.com/wp-content/uploads/2017/02/skillet-seared-salmon-2.jpg" className="img-fluid z-depth-2" alt="" />
-              </MDBCol>
-            </MDBRow>
-
-          </MDBContainer>
+          <div className="mt-5">
+            <p> Suggested Categories: </p>
+            <MDBContainer className="mt-2">
+              <MDBRow>
+                <MDBCol lg="4" md="12" className="mb-4 text-center" >
+                  <Button className="mb-3" variant="success" onClick={() => searchRecipes('salad')}>
+                    Salad
+          </Button>
+                  <img src="https://natashaskitchen.com/wp-content/uploads/2019/02/Greek-Salad-600x900.jpg" className="img-fluid z-depth-1" alt="" />
+                </MDBCol>
+                <MDBCol lg="4" md="6" className="mb-4 text-center">
+                  <Button className="mb-3" variant="success" onClick={() => searchRecipes('detox')}>
+                    Detox Juice
+          </Button>
+                  <img src="https://i.pinimg.com/564x/5e/b7/7c/5eb77c0036e60a20503bb306d43debf6.jpg" className="img-fluid z-depth-1-half"
+                    alt="" />
+                </MDBCol>
+                <MDBCol lg="4" md="6" className="mb-4 text-center">
+                  <Button className="mb-3" variant="success" onClick={() => searchRecipes('salmon')}>
+                    Salmon
+          </Button>
+                  <img src="https://www.cookingclassy.com/wp-content/uploads/2017/02/skillet-seared-salmon-2.jpg" className="img-fluid z-depth-2" alt="" />
+                </MDBCol>
+              </MDBRow>
+            </MDBContainer>
+          </div>
         </>
       );
 }
@@ -112,7 +113,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setActiveRecipe,
+  setActiveRecipe, searchRecipes
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
