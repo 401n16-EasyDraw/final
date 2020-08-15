@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 function RecipeDetails(props) {
   const { activeRecipe } = props;
@@ -17,7 +18,9 @@ function RecipeDetails(props) {
       <p>Source: {activeRecipe.source}</p>
       <div>{ingredientsToRender}</div>
     </>
-  ) : null;
+  ) : (
+    <Redirect push to="/" />
+  );
 }
 
 const mapStateToProps = (state) => {
