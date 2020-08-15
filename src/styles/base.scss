@@ -86,23 +86,23 @@ code {
   min-height: 87.5vh;
   padding: $spacing * 6 $spacing * 2.5;
   box-sizing: border-box;
-  margin: 5vh 5% auto;
+  margin: 4em 10% auto;
 
   @media (min-width: 1200px) {
-    margin: 5vh 7.5% auto;
+    margin: 4em 7.5% auto;
   }
 
   @media (min-width: 1920px) {
-    margin: 5vh 10% auto;
+    margin: 4em 10% auto;
   }
 
   @media (max-width: 768px) {
     margin: 0;
-    margin-top: 5vh;
+    margin-top: 4em;
   }
 
   @media (max-width: 420px) {
-    margin-top: 7vh;
+    margin-top: 4em;
   }
 
   .cont-child {
@@ -149,4 +149,12 @@ code {
 .no-style,
 .no-style:hover .no-style:visited {
   text-decoration: none !important;
+}
+
+.dotted-line{
+  border-bottom: 1px dotted red;
+}
+
+.italic{
+  font-style: italic;
 }

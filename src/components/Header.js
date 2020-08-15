@@ -43,7 +43,7 @@ function Header(props) {
     <>
       <Navbar id="main-header" variant="dark" expand="md" expanded={expanded}>
         <Navbar.Brand>
-          <h1>Some App Name</h1>
+          <h1>EasyCook</h1>
         </Navbar.Brand>
         <Navbar.Toggle
           aria-controls="basic-navbar-nav"
