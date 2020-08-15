@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import LoadingSpinner from './LoadingSpinner';
 import { Card, CardDeck, Button, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { setActiveRecipe } from '../store/recipe-slice.js';
 
@@ -46,9 +47,11 @@ function RecipeList(props) {
                 setActiveRecipe(recipe);
               }}
             >
-              <Button className="btn-block" variant="info">
-                View Details
-              </Button>
+              <Link to={`/recipes/details`} className="no-style">
+                <Button className="btn-block" variant="info">
+                  View Details
+                </Button>
+              </Link>
             </Card.Text>
           </Card.Body>
           <Card.Footer>

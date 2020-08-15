@@ -5,7 +5,8 @@ import store from './store';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import RecipeList from './components/RecipeList';
-import { BrowserRouter } from 'react-router-dom';
+import RecipeDetails from './components/RecipeDetails';
+import { BrowserRouter, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/base.scss';
 
@@ -15,7 +16,8 @@ function App() {
       <BrowserRouter>
         <Header />
         <div id="main-content">
-          <RecipeList />
+          <Route path="/" exact component={RecipeList} />
+          <Route path="/recipes/details" exact component={RecipeDetails} />
         </div>
         <Footer />
       </BrowserRouter>
