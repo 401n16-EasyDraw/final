@@ -145,3 +145,8 @@ code {
     }
   }
 }
+
+.no-style,
+.no-style:hover .no-style:visited {
+  text-decoration: none !important;
+}
