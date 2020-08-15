@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Card, CardDeck, Button, Col } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function RecipeDetails(props) {
@@ -10,7 +10,7 @@ function RecipeDetails(props) {
 
   if (activeRecipe.ingredientLines) {
     activeRecipe.ingredientLines.forEach((ingredient, idx) => {
-      ingredientsToRender.push(<p key={`ingrd-${idx}`}>{ingredient}</p>);
+      ingredientsToRender.push(<li key={`ingrd-${idx}`}>{ingredient}</li>);
     });
   }
 
@@ -25,10 +25,13 @@ function RecipeDetails(props) {
         <Card.Img className="img-thumbnail" variant="top" src={activeRecipe.image} style={{ maxHeight: '400px', maxWidth: '400px' }} />
         <Card.Body>
           <Card.Title>{activeRecipe.label}</Card.Title>
-          <Card.Text>Source: {activeRecipe.source}</Card.Text>
+          <Card.Text>Calories: {parseInt(activeRecipe.calories)}</Card.Text>
           <Card.Text>
+            Ingredients:
+            </Card.Text>
+          <ul>
             {ingredientsToRender}
-          </Card.Text>
+          </ul>
           <Card.Text>
             <a href={activeRecipe.url}> Cooking Direction: {activeRecipe.url}</a>
           </Card.Text>
