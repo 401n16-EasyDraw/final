@@ -22,7 +22,7 @@ function RecipeDetails(props) {
                 </Button>
       </Link>
       <Card>
-        <Card.Img variant="top" src={activeRecipe.image} />
+        <Card.Img className="img-thumbnail" variant="top" src={activeRecipe.image} style={{ maxHeight: '400px', maxWidth: '400px' }} />
         <Card.Body>
           <Card.Title>{activeRecipe.label}</Card.Title>
           <Card.Text>Source: {activeRecipe.source}</Card.Text>

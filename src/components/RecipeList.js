@@ -7,7 +7,7 @@ import axios from 'axios';
 import { setActiveRecipe } from '../store/recipe-slice.js';
 
 function RecipeList(props) {
-  const { searchResults, setActiveRecipe } = props;
+  const { searchResults, setActiveRecipe, query } = props;
   const recipesToRender = [];
   const [isLoading, setIsLoading] = useState(false);
 
@@ -67,16 +67,17 @@ function RecipeList(props) {
   ) : recipesToRender.length ? (
     <CardDeck>{recipesToRender}</CardDeck>
   ) : (
-    <>
-      <h2>Nothing to display! :(</h2>
-      <p>Search for recipes with the search bar above!</p>
-    </>
-  );
+        <>
+          <h2>{query ? 'Let\'s start cooking!' : 'Nothing to display! :('}</h2>
+          <p>Search for recipes with the search bar above!</p>
+        </>
+      );
 }
 
 const mapStateToProps = (state) => {
   return {
     searchResults: state.recipeStore.searchResults,
+    query: state.recipeStore.query
   };
 };
 
