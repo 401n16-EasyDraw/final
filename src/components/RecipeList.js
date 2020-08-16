@@ -7,6 +7,8 @@ import axios from 'axios';
 import { setActiveRecipe } from '../store/recipe-slice.js';
 import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import { searchRecipes } from '../store/recipe-slice';
+import auth from './auth';
+
 
 function RecipeList(props) {
   const { searchResults, setActiveRecipe, query, searchRecipes } = props;
@@ -73,7 +75,15 @@ function RecipeList(props) {
           <h2 className="italic">{query ? 'Nothing to display! :(' : 'Let\'s start cooking!'}</h2>
           <p>Search for recipes with the search bar above!</p>
           <hr className="dotted-line" />
-
+          <button
+            onClick={() => {
+              auth.logout(() => {
+                props.history.push("/");
+              });
+            }}
+          >
+            Logout
+          </button>
           <div className="mt-5">
             <p> Suggested Categories: </p>
             <MDBContainer className="mt-2">
