@@ -18,7 +18,6 @@ const recipeSlice = createSlice({
     },
     setActiveRecipe: (state, action) => {
       state.activeRecipe = action.payload;
-      console.log('What is activeRecipe now?', state.activeRecipe);
     },
   },
 });
