@@ -15,7 +15,7 @@ import '../styles/footer.scss';
 function Footer() {
   return (
     <footer id="main-footer">
-      <p>Created by EasyCook</p>
+      <p>Created by Team EasyCook</p>
       <div className="url-icons">
         <a href=".">
           <FontAwesomeIcon icon={faLinkedin} size="lg" />
