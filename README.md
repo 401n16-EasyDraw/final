@@ -18,6 +18,7 @@ Within Terminal/Git Bash:
 1. From the main directory type `npm i` to install node modules
 2. From the main directory, start the server with `nodemon hub.js`
 3. Open another Terminal/Git Bash window, go to the public directory with `cd public`, and then start the live-server with `live-server`
+4. npm i npm i react-facebook-login // to get facebook auth working
 
 ### Tests
 
