@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/base.scss';
 import {LandingPage} from './components/landingPage'
 import { ProtectedRoute} from './components/protected.route'
+import Facebook from "./components/facebook";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <div id="main-content">
-      <Switch>
+      <Switch>  
           <Route path="/" exact component={LandingPage} />
           <ProtectedRoute path="/cook" exact component={RecipeList} />
           <Route path="/recipes/details" exact component={RecipeDetails} />
