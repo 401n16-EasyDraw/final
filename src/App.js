@@ -19,8 +19,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <div id="main-content">
-      <Switch>
-          <Route path="/" exact component={LandingPage} />  
+      <Switch>  
           <Route path="/" exact component={LandingPage} />
           <ProtectedRoute path="/cook" exact component={RecipeList} />
           <Route path="/recipes/details" exact component={RecipeDetails} />
