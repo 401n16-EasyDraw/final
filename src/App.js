@@ -6,9 +6,11 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/base.scss';
+import {LandingPage} from './components/landingPage'
+import { ProtectedRoute} from './components/protected.route'
 
 function App() {
   return (
@@ -16,8 +18,12 @@ function App() {
       <BrowserRouter>
         <Header />
         <div id="main-content">
-          <Route path="/" exact component={RecipeList} />
+      <Switch>
+          <Route path="/" exact component={LandingPage} />
+          <ProtectedRoute path="/cook" exact component={RecipeList} />
           <Route path="/recipes/details" exact component={RecipeDetails} />
+          <Route path="*" component ={()=> "404 NOT FOUND"} />
+      </Switch>
         </div>
         <Footer />
       </BrowserRouter>
