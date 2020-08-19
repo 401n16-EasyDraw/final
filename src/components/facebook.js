@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import FacebookLoginWithButton from 'react-facebook-login';
 import { Redirect } from 'react-router-dom';
-import auth from './auth';
+import { login, logout } from '../store/user-slice';
 
-export default function Facebook(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userID, setUserID] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [picture, setPicture] = useState('');
+function Facebook(props) {
+  const { isLoggedIn, login } = props;
 
   const responseFacebook = (response) => {
     if (response.accessToken) {
-      setIsLoggedIn(true);
-      setUserID(response.userID);
-      setName(response.name);
-      setEmail(response.email);
-      setPicture(
-        response && response.picture ? response.picture.data.url : null
-      );
+      login({
+        userID: response.userID,
+        name: response.name,
+        email: response.email,
+        picture: response.picture.data.url,
+      });
     } else {
       console.error('error: failed to login');
     }
@@ -43,3 +39,13 @@ export default function Facebook(props) {
 
   return <div>{fbContent}</div>;
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.userStore.loggedIn,
+  };
+};
+
+const mapDispatchToProps = { login, logout };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Facebook);
