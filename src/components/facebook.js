@@ -1,59 +1,45 @@
-import React, { Component } from "react";
-import FacebookLogin from "react-facebook-login";
+import React, { useState } from 'react';
+import FacebookLoginWithButton from 'react-facebook-login';
+import { Redirect } from 'react-router-dom';
+import auth from './auth';
 
-export default class Facebook extends Component {
-  state = {
-    isLoggedIn: false,
-    userID: "",
-    name: "",
-    email: "",
-    picture: ""
-  };
+export default function Facebook(props) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userID, setUserID] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [picture, setPicture] = useState('');
 
-  responseFacebook = response => {
-    // console.log(response);
-
-    this.setState({
-      isLoggedIn: true,
-      userID: response.userID,
-      name: response.name,
-      email: response.email,
-      picture: response.picture.data.url
-    });
-  };
-
-  componentClicked = () => console.log("clicked");
-
-  render() {
-    let fbContent;
-
-    if (this.state.isLoggedIn) {
-      fbContent = (
-        <div
-          style={{
-            width: "400px",
-            margin: "auto",
-            background: "#f4f4f4",
-            padding: "20px"
-          }}
-        >
-          <img src={this.state.picture} alt={this.state.name} />
-          <h2>Welcome {this.state.name}</h2>
-          Email: {this.state.email}
-        </div>
+  const responseFacebook = (response) => {
+    if (response.accessToken) {
+      setIsLoggedIn(true);
+      setUserID(response.userID);
+      setName(response.name);
+      setEmail(response.email);
+      setPicture(
+        response && response.picture ? response.picture.data.url : null
       );
     } else {
-      fbContent = (
-        <FacebookLogin
-          appId="3053710821394859"
-          autoLoad={true}
-          fields="name,email,picture"
-          onClick={this.componentClicked}
-          callback={this.responseFacebook}
-        />
-      );
+      console.error('error: failed to login');
     }
 
-    return <div>{fbContent}</div>;
-  }
+    console.log('What is response?', response);
+  };
+
+  const componentClicked = () => console.log('clicked');
+
+  const fbContent = isLoggedIn ? (
+    <Redirect push to="/cook" />
+  ) : (
+    <FacebookLoginWithButton
+      appId="3053710821394859"
+      autoLoad={true}
+      fields="name,email,picture"
+      onClick={componentClicked}
+      callback={responseFacebook}
+      icon="fa-facebook"
+    />
+  );
+
+  return <div>{fbContent}</div>;
 }
