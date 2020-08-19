@@ -1,5 +1,5 @@
 import React from 'react';
-import auth from './auth';
+//import auth from './auth';
 import Facebook from './facebook';
 
 export const LandingPage = (props) => {
