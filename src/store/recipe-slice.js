@@ -19,10 +19,19 @@ const recipeSlice = createSlice({
     setActiveRecipe: (state, action) => {
       state.activeRecipe = action.payload;
     },
+    resetRecipeState: (state, action) => {
+      state.searchResults = [];
+      state.query = '';
+      state.activeRecipe = {};
+    },
   },
 });
 
-export const { getRecipes, setActiveRecipe } = recipeSlice.actions;
+export const {
+  getRecipes,
+  setActiveRecipe,
+  resetRecipeState,
+} = recipeSlice.actions;
 
 export const searchRecipes = (query) => async (dispatch) => {
   const response = await axios.get(

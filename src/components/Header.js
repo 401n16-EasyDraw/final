@@ -9,7 +9,7 @@ import {
   Button,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { searchRecipes } from '../store/recipe-slice';
+import { searchRecipes, resetRecipeState } from '../store/recipe-slice';
 import '../styles/header.scss';
 import { logout } from '../store/user-slice';
 
@@ -25,11 +25,11 @@ import { logout } from '../store/user-slice';
 function Header(props) {
   const [expanded, setExpanded] = useState(false);
   const [query, setQuery] = useState('');
-  const { searchRecipes, user, isLoggedIn, logout } = props;
+  const { searchRecipes, user, isLoggedIn, logout, resetRecipeState } = props;
 
   const links = [
     { displayName: 'Home', url: '/' },
-    { displayName: 'Subpage', url: '/subpage' },
+    { displayName: 'Favorites', url: '/favorites' },
   ];
 
   const navLinks = [];
@@ -67,10 +67,13 @@ function Header(props) {
                 title={`Hi, ${user.name}!`}
                 id="collasible-nav-dropdown"
               >
-                <NavDropdown.Item href="/favorites">Favorites</NavDropdown.Item>
+                <Link to="/favorites" className="dropdown-item">
+                  Favorites
+                </Link>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
                   onClick={() => {
+                    resetRecipeState();
                     logout();
                   }}
                 >
@@ -113,6 +116,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { searchRecipes, logout };
+const mapDispatchToProps = { searchRecipes, logout, resetRecipeState };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

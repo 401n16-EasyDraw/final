@@ -7,7 +7,7 @@ import axios from 'axios';
 import { setActiveRecipe } from '../store/recipe-slice.js';
 import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import { searchRecipes } from '../store/recipe-slice';
-import { logout } from '../store/user-slice';
+import { logout, addToFavorites } from '../store/user-slice';
 
 import auth from './auth';
 
@@ -19,6 +19,8 @@ function RecipeList(props) {
     searchRecipes,
     logout,
     isLoggedIn,
+    addToFavorites,
+    favID,
   } = props;
   const recipesToRender = [];
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +69,12 @@ function RecipeList(props) {
             </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <Button className="btn-block">Save to Favorites</Button>
+            <Button
+              className="btn-block"
+              onClick={() => addToFavorites({ recipe, favID })}
+            >
+              Add to Favorites
+            </Button>
           </Card.Footer>
         </Card>
       </Col>
@@ -154,8 +161,9 @@ function RecipeList(props) {
 const mapStateToProps = (state) => {
   return {
     searchResults: state.recipeStore.searchResults,
-    isLoggedIn: state.userStore.loggedIn,
     query: state.recipeStore.query,
+    isLoggedIn: state.userStore.loggedIn,
+    favID: state.userStore.favID,
   };
 };
 
@@ -163,6 +171,7 @@ const mapDispatchToProps = {
   setActiveRecipe,
   searchRecipes,
   logout,
+  addToFavorites,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);
