@@ -87,7 +87,8 @@ function RecipeList(props) {
       </h2>
       <p>Search for recipes with the search bar above!</p>
       <hr className="dotted-line" />
-      <button
+      <Button
+        variant="danger"
         onClick={() => {
           logout();
           auth.logout(() => {
@@ -96,7 +97,7 @@ function RecipeList(props) {
         }}
       >
         Logout
-      </button>
+      </Button>
       <div className="mt-5">
         <p> Suggested Categories: </p>
         <MDBContainer className="mt-2">
