@@ -1,18 +1,18 @@
 import React from 'react';
 import auth from './auth';
-export const LandingPage = props => {
-    return (
-        <div>
-            <h1>Welcome to the secret page of secured recipes</h1>
-            <button
-                onClick={() => {
-                    auth.login(() => {
-                        props.history.push("/cook");
-                    });
-                }}
-            >
-                Login to Learn More
-        </button>
-        </div>
-    );
+import Facebook from './facebook';
+
+export const LandingPage = (props) => {
+  return (
+    <div className="landing">
+      <h2>Welcome to the secret page of secured recipes!</h2>
+      <Facebook props={props} />
+      <img
+        // src="https://i.pinimg.com/564x/02/ac/ae/02acaed47cacaa668ba57f18ab86ab80.jpg"
+        src="cooking.jpg"
+        id="cooking"
+        alt=""
+      />
+    </div>
+  );
 };

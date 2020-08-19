@@ -17,7 +17,7 @@ import '../styles/header.scss';
 function Header(props) {
   const [expanded, setExpanded] = useState(false);
   const [query, setQuery] = useState('');
-  const { searchRecipes } = props;
+  const { searchRecipes, user, isLoggedIn } = props;
 
   const links = [
     { displayName: 'Home', url: '/' },
@@ -53,24 +53,34 @@ function Header(props) {
           <Nav className="mr-auto">
             <>{navLinks}</>
           </Nav>
+          <Nav>
+            {isLoggedIn ? (
+              <Nav.Link
+                style={{ color: 'white' }}
+              >{`Hi, ${user.name}!`}</Nav.Link>
+            ) : null}
+            <Form
+              inline
+              onSubmit={(e) => {
+                e.preventDefault();
+                searchRecipes(query);
+              }}
+            >
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <Button
+                variant="outline-dark"
+                onClick={() => searchRecipes(query)}
+              >
+                Search
+              </Button>
+            </Form>
+          </Nav>
         </Navbar.Collapse>
-        <Form
-          inline
-          onSubmit={(e) => {
-            e.preventDefault();
-            searchRecipes(query);
-          }}
-        >
-          <FormControl
-            type="text"
-            placeholder="Search"
-            className="mr-sm-2"
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <Button variant="outline-dark" onClick={() => searchRecipes(query)}>
-            Search
-          </Button>
-        </Form>
       </Navbar>
     </>
   );
@@ -79,6 +89,8 @@ function Header(props) {
 const mapStateToProps = (state) => {
   return {
     searchResults: state.recipeStore.searchResults,
+    isLoggedIn: state.userStore.loggedIn,
+    user: state.userStore.user,
   };
 };
 
