@@ -9,7 +9,7 @@ import {
   Button,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { searchRecipes, resetRecipeState } from '../store/recipe-slice';
+import { searchRecipes, setSearchState } from '../store/recipe-slice';
 import '../styles/header.scss';
 import { logout } from '../store/user-slice';
 
@@ -25,7 +25,7 @@ import { logout } from '../store/user-slice';
 function Header(props) {
   const [expanded, setExpanded] = useState(false);
   const [query, setQuery] = useState('');
-  const { searchRecipes, user, isLoggedIn, logout, resetRecipeState } = props;
+  const { searchRecipes, user, isLoggedIn, logout, setSearchState } = props;
 
   const links = [
     { displayName: 'Home', url: '/' },
@@ -73,7 +73,7 @@ function Header(props) {
                 <NavDropdown.Divider />
                 <NavDropdown.Item
                   onClick={() => {
-                    resetRecipeState();
+                    setSearchState(false);
                     logout();
                   }}
                 >
@@ -85,6 +85,7 @@ function Header(props) {
               inline
               onSubmit={(e) => {
                 e.preventDefault();
+                setSearchState(true);
                 searchRecipes(query);
               }}
             >
@@ -96,7 +97,10 @@ function Header(props) {
               />
               <Button
                 variant="outline-dark"
-                onClick={() => searchRecipes(query)}
+                onClick={() => {
+                  setSearchState(true);
+                  searchRecipes(query);
+                }}
               >
                 Search
               </Button>
@@ -116,6 +120,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { searchRecipes, logout, resetRecipeState };
+const mapDispatchToProps = {
+  searchRecipes,
+  logout,
+  setSearchState,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

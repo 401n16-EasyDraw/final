@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { addToFavorites, deleteFromFavorites } from '../store/user-slice';
-import { resetSearchState } from '../store/recipe-slice';
 
 function RecipeDetails(props) {
   const {
@@ -15,12 +14,7 @@ function RecipeDetails(props) {
     deleteFromFavorites,
     favID,
     searching,
-    resetSearchState,
   } = props;
-
-  useEffect(() => {
-    resetSearchState();
-  }, [searching, resetSearchState]);
 
   const ingredientsToRender = [];
 
@@ -126,6 +120,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   addToFavorites,
   deleteFromFavorites,
-  resetSearchState,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetails);
