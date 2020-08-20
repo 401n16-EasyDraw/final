@@ -70,6 +70,20 @@ function RecipeDetails(props) {
               Cooking Direction: {activeRecipe.url}
             </a>
           </Card.Text>
+          <div
+            class="fb-share-button"
+            data-href={activeRecipe.url}
+            data-layout="button_count"
+            data-size="large"
+          >
+            <a
+              target="_blank"
+              href={`https://www.facebook.com/sharer/sharer.php?u=${activeRecipe.url}`}
+              class="fb-xfbml-parse-ignore"
+            >
+              Share to Facebook
+            </a>
+          </div>
         </Card.Body>
         <Card.Footer>
           {isInFavorites() ? (
