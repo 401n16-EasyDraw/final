@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { addToFavorites, deleteFromFavorites } from '../store/user-slice';
+import { resetSearchState } from '../store/recipe-slice';
 
 function RecipeDetails(props) {
   const {
@@ -13,7 +14,14 @@ function RecipeDetails(props) {
     addToFavorites,
     deleteFromFavorites,
     favID,
+    searching,
+    resetSearchState,
   } = props;
+
+  useEffect(() => {
+    resetSearchState();
+  }, [searching, resetSearchState]);
+
   const ingredientsToRender = [];
 
   if (activeRecipe.ingredientLines) {
@@ -35,7 +43,9 @@ function RecipeDetails(props) {
     return res;
   };
 
-  return isLoggedIn && Object.keys(activeRecipe).length ? (
+  return searching ? (
+    <Redirect push to="/" />
+  ) : isLoggedIn && Object.keys(activeRecipe).length ? (
     <>
       <Link to="/" className="no-style">
         <Button className="m-2" variant="info">
@@ -91,6 +101,7 @@ function RecipeDetails(props) {
 const mapStateToProps = (state) => {
   return {
     activeRecipe: state.recipeStore.activeRecipe,
+    searching: state.recipeStore.searching,
     isLoggedIn: state.userStore.loggedIn,
     favorites: state.userStore.favorites,
     favID: state.userStore.favID,
@@ -100,5 +111,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   addToFavorites,
   deleteFromFavorites,
+  resetSearchState,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetails);

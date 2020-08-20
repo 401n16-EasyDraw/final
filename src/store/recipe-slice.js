@@ -8,6 +8,7 @@ const recipeSlice = createSlice({
     searchResults: [],
     query: '',
     activeRecipe: {},
+    searching: false,
   },
 
   reducers: {
@@ -15,6 +16,7 @@ const recipeSlice = createSlice({
       const { payload } = action;
       state.searchResults = payload.searchResults;
       state.query = payload.query;
+      state.searching = true;
     },
     setActiveRecipe: (state, action) => {
       state.activeRecipe = action.payload;
@@ -23,6 +25,10 @@ const recipeSlice = createSlice({
       state.searchResults = [];
       state.query = '';
       state.activeRecipe = {};
+      state.searching = false;
+    },
+    resetSearchState: (state, action) => {
+      state.searching = false;
     },
   },
 });
@@ -31,6 +37,7 @@ export const {
   getRecipes,
   setActiveRecipe,
   resetRecipeState,
+  resetSearchState,
 } = recipeSlice.actions;
 
 export const searchRecipes = (query) => async (dispatch) => {

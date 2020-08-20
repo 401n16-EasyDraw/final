@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { CardDeck, Col, Card, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
-import { searchRecipes, setActiveRecipe } from '../store/recipe-slice';
+import {
+  searchRecipes,
+  setActiveRecipe,
+  resetSearchState,
+} from '../store/recipe-slice';
 import { deleteFromFavorites, logout } from '../store/user-slice';
 import LoadingSpinner from './LoadingSpinner';
 import axios from 'axios';
@@ -14,8 +18,15 @@ function Favorites(props) {
     isLoggedIn,
     setActiveRecipe,
     favID,
+    searching,
     deleteFromFavorites,
+    resetSearchState,
   } = props;
+
+  useEffect(() => {
+    resetSearchState();
+  }, [searching, resetSearchState]);
+
   const recipesToRender = [];
 
   axios.interceptors.request.use(
@@ -73,7 +84,7 @@ function Favorites(props) {
     );
   });
 
-  return !isLoggedIn ? (
+  return searching || !isLoggedIn ? (
     <Redirect push to="/" />
   ) : isLoading ? (
     <LoadingSpinner />
@@ -95,6 +106,7 @@ function Favorites(props) {
 const mapStateToProps = (state) => {
   return {
     favorites: state.userStore.favorites,
+    searching: state.recipeStore.searching,
     favID: state.userStore.favID,
     isLoggedIn: state.userStore.loggedIn,
   };
@@ -105,6 +117,7 @@ const mapDispatchToProps = {
   searchRecipes,
   logout,
   deleteFromFavorites,
+  resetSearchState,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
