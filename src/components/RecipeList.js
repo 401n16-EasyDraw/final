@@ -97,13 +97,13 @@ function RecipeList(props) {
                 Delete from Favorites
               </Button>
             ) : (
-              <Button
-                className="btn-block"
-                onClick={() => addToFavorites({ recipe, favID })}
-              >
-                Add to Favorites
-              </Button>
-            )}
+                <Button
+                  className="btn-block"
+                  onClick={() => addToFavorites({ recipe, favID })}
+                >
+                  Add to Favorites
+                </Button>
+              )}
           </Card.Footer>
         </Card>
       </Col>
@@ -120,74 +120,63 @@ function RecipeList(props) {
       <CardDeck>{recipesToRender}</CardDeck>
     </>
   ) : (
-    <>
-      <h2 className="italic">
-        {query ? 'Nothing to display! :(' : "Let's start cooking!"}
-      </h2>
-      <p>Search for recipes with the search bar above!</p>
-      <hr className="dotted-line" />
-      <Button
-        variant="danger"
-        onClick={() => {
-          logout();
-          auth.logout(() => {
-            props.history.push('/');
-          });
-        }}
-      >
-        Logout
-      </Button>
-      <div className="mt-5">
-        <p> Suggested Categories: </p>
-        <MDBContainer className="mt-2">
-          <MDBRow>
-            <MDBCol lg="4" md="12" className="mb-4 text-center">
-              <Button
-                className="mb-3"
-                variant="success"
-                onClick={() => searchRecipes('salad')}
-              >
-                Salad
+          <>
+            <h2 className="italic">
+              {query ? 'Nothing to display! :(' : "Let's start cooking!"}
+            </h2>
+            <p>Search for recipes with the search bar above!</p>
+            <hr className="dotted-line" />
+            <div className="mt-5">
+              <p> Suggested Categories: </p>
+              <MDBContainer className="mt-2">
+                <MDBRow>
+                  <MDBCol lg="4" md="12" className="mb-4 text-center">
+                    <Button
+                      className="mb-3"
+                      variant="success"
+                      onClick={() => searchRecipes('salad')}
+                    >
+                      Salad
               </Button>
-              <img
-                src="https://natashaskitchen.com/wp-content/uploads/2019/02/Greek-Salad-600x900.jpg"
-                className="img-fluid z-depth-1"
-                alt=""
-              />
-            </MDBCol>
-            <MDBCol lg="4" md="6" className="mb-4 text-center">
-              <Button
-                className="mb-3"
-                variant="success"
-                onClick={() => searchRecipes('detox')}
-              >
-                Detox Juice
+                    <img
+                      src="https://natashaskitchen.com/wp-content/uploads/2019/02/Greek-Salad-600x900.jpg"
+                      className="img-fluid z-depth-1"
+                      alt=""
+                    />
+                  </MDBCol>
+                  <MDBCol lg="4" md="6" className="mb-4 text-center">
+                    <Button
+                      className="mb-3"
+                      variant="success"
+                      onClick={() => searchRecipes('detox')}
+                    >
+                      Detox Juice
               </Button>
-              <img
-                src="https://i.pinimg.com/564x/5e/b7/7c/5eb77c0036e60a20503bb306d43debf6.jpg"
-                className="img-fluid z-depth-1-half"
-                alt=""
-              />
-            </MDBCol>
-            <MDBCol lg="4" md="6" className="mb-4 text-center">
-              <Button
-                className="mb-3"
-                variant="success"
-                onClick={() => searchRecipes('salmon')}
-              >
-                Salmon
+                    <img
+                      src="https://i.pinimg.com/564x/5e/b7/7c/5eb77c0036e60a20503bb306d43debf6.jpg"
+                      className="img-fluid z-depth-1-half"
+                      alt=""
+                    />
+                  </MDBCol>
+                  <MDBCol lg="4" md="6" className="mb-4 text-center">
+                    <Button
+                      className="mb-3"
+                      variant="success"
+                      onClick={() => searchRecipes('salmon')}
+                    >
+                      Salmon
               </Button>
-              <img
-                src="https://www.cookingclassy.com/wp-content/uploads/2017/02/skillet-seared-salmon-2.jpg"
-                className="img-fluid z-depth-2"
-                alt=""
-              />
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </div>
-    </>
-  );
+                    <img
+                      src="https://www.cookingclassy.com/wp-content/uploads/2017/02/skillet-seared-salmon-2.jpg"
+                      className="img-fluid z-depth-2"
+                      alt=""
+                    />
+                  </MDBCol>
+                </MDBRow>
+              </MDBContainer>
+            </div>
+          </>
+        );
 }
 
 const mapStateToProps = (state) => {
