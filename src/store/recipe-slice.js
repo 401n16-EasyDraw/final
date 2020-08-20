@@ -5,10 +5,10 @@ const recipeSlice = createSlice({
   name: 'recipeStore',
 
   initialState: {
+    searching: false,
     searchResults: [],
     query: '',
     activeRecipe: {},
-    searching: false,
   },
 
   reducers: {
