@@ -78,6 +78,7 @@ function RecipeDetails(props) {
           >
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href={`https://www.facebook.com/sharer/sharer.php?u=${activeRecipe.url}`}
               class="fb-xfbml-parse-ignore"
             >
