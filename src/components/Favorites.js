@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { CardDeck, Col, Card, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { searchRecipes, setActiveRecipe } from '../store/recipe-slice';
-import { deleteFromFavorites, logout } from '../store/user-slice';
+import { deleteFromFavorites } from '../store/user-slice';
 import LoadingSpinner from './LoadingSpinner';
 import axios from 'axios';
 
@@ -106,7 +106,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setActiveRecipe,
   searchRecipes,
-  logout,
   deleteFromFavorites,
 };
 

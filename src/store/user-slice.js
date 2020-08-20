@@ -13,8 +13,7 @@ const userSlice = createSlice({
 
   reducers: {
     login: (state, action) => {
-      const { payload } = action;
-      state.user = payload;
+      state.user = action.payload;
       state.loggedIn = true;
     },
     logout: (state, action) => {
@@ -29,9 +28,7 @@ const userSlice = createSlice({
       state.favorites = payload.list;
     },
     updateFavorites: (state, action) => {
-      const { payload } = action;
-      state.favorites = payload;
-      console.log('What are favorites now?', state.favorites);
+      state.favorites = action.payload;
     },
   },
 });
@@ -47,13 +44,10 @@ export const findExistingFavorites = (payload) => async (dispatch) => {
   let response = await axios.get(
     `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites?userID=${payload.userID}`
   );
-  // console.log('What the heck is the response?', response.data.results);
 
   if (response.data.results.length) {
-    console.log('Found existing favorite!');
     dispatch(getFavorites(response.data.results[0]));
   } else {
-    console.log('No existing favorites! Adding a new favorites object...');
     response = await axios.post(
       `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites`,
       {
@@ -92,7 +86,6 @@ export const addToFavorites = (payload) => async (dispatch) => {
 };
 
 export const deleteFromFavorites = (payload) => async (dispatch) => {
-  console.log('Did this even triger?');
   const { favID, recipe } = payload;
   const response = await axios.get(
     `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites/${favID}`
@@ -102,7 +95,6 @@ export const deleteFromFavorites = (payload) => async (dispatch) => {
     (item) => item.uri !== recipe.uri && item.label !== recipe.label
   );
 
-  console.log('What is filtered list?', newList);
   await axios.patch(
     `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites/${favID}`,
     { list: newList }
