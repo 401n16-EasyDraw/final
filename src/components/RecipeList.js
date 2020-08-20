@@ -7,7 +7,11 @@ import axios from 'axios';
 import { setActiveRecipe } from '../store/recipe-slice.js';
 import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import { searchRecipes } from '../store/recipe-slice';
-import { logout, addToFavorites } from '../store/user-slice';
+import {
+  logout,
+  addToFavorites,
+  deleteFromFavorites,
+} from '../store/user-slice';
 
 import auth from './auth';
 
@@ -20,6 +24,8 @@ function RecipeList(props) {
     logout,
     isLoggedIn,
     addToFavorites,
+    deleteFromFavorites,
+    favorites,
     favID,
   } = props;
   const recipesToRender = [];
@@ -46,6 +52,19 @@ function RecipeList(props) {
     }
   );
 
+  const isInFavorites = (recipe, favorites) => {
+    let res = false;
+
+    for (const item of favorites) {
+      if (item.uri === recipe.uri && item.label === recipe.label) {
+        res = true;
+        break;
+      }
+    }
+
+    return res;
+  };
+
   searchResults.forEach((hit, i) => {
     const { recipe } = hit;
 
@@ -69,12 +88,22 @@ function RecipeList(props) {
             </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <Button
-              className="btn-block"
-              onClick={() => addToFavorites({ recipe, favID })}
-            >
-              Add to Favorites
-            </Button>
+            {isInFavorites(recipe, favorites) ? (
+              <Button
+                className="btn-block"
+                variant="danger"
+                onClick={() => deleteFromFavorites({ recipe, favID })}
+              >
+                Delete from Favorites
+              </Button>
+            ) : (
+              <Button
+                className="btn-block"
+                onClick={() => addToFavorites({ recipe, favID })}
+              >
+                Add to Favorites
+              </Button>
+            )}
           </Card.Footer>
         </Card>
       </Col>
@@ -86,7 +115,10 @@ function RecipeList(props) {
   ) : isLoading ? (
     <LoadingSpinner />
   ) : recipesToRender.length ? (
-    <CardDeck>{recipesToRender}</CardDeck>
+    <>
+      <h2>Search Results</h2>
+      <CardDeck>{recipesToRender}</CardDeck>
+    </>
   ) : (
     <>
       <h2 className="italic">
@@ -163,6 +195,7 @@ const mapStateToProps = (state) => {
     searchResults: state.recipeStore.searchResults,
     query: state.recipeStore.query,
     isLoggedIn: state.userStore.loggedIn,
+    favorites: state.userStore.favorites,
     favID: state.userStore.favID,
   };
 };
@@ -172,6 +205,7 @@ const mapDispatchToProps = {
   searchRecipes,
   logout,
   addToFavorites,
+  deleteFromFavorites,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);

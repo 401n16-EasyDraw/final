@@ -1,13 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { CardDeck, Col, Card, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { searchRecipes, setActiveRecipe } from '../store/recipe-slice';
-import { addToFavorites, logout } from '../store/user-slice';
+import { deleteFromFavorites, logout } from '../store/user-slice';
+import LoadingSpinner from './LoadingSpinner';
+import axios from 'axios';
 
 function Favorites(props) {
-  const { favorites, isLoggedIn, setActiveRecipe } = props;
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    favorites,
+    isLoggedIn,
+    setActiveRecipe,
+    favID,
+    deleteFromFavorites,
+  } = props;
   const recipesToRender = [];
+
+  axios.interceptors.request.use(
+    function (config) {
+      setIsLoading(true);
+      return config;
+    },
+    function (error) {
+      return Promise.reject(error);
+    }
+  );
+
+  axios.interceptors.response.use(
+    function (response) {
+      setIsLoading(false);
+      return response;
+    },
+    function (error) {
+      setIsLoading(false);
+      return Promise.reject(error);
+    }
+  );
 
   favorites.forEach((recipe, i) => {
     recipesToRender.push(
@@ -30,7 +60,11 @@ function Favorites(props) {
             </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <Button className="btn-block" variant="danger" onClick={() => {}}>
+            <Button
+              className="btn-block"
+              variant="danger"
+              onClick={() => deleteFromFavorites({ recipe, favID })}
+            >
               Delete from Favorites
             </Button>
           </Card.Footer>
@@ -39,19 +73,29 @@ function Favorites(props) {
     );
   });
 
-  return isLoggedIn ? (
+  return !isLoggedIn ? (
+    <Redirect push to="/" />
+  ) : isLoading ? (
+    <LoadingSpinner />
+  ) : (
     <>
       <h2>My Favorites</h2>
-      <CardDeck>{recipesToRender}</CardDeck>
+      {recipesToRender.length ? (
+        <CardDeck>{recipesToRender}</CardDeck>
+      ) : (
+        <h3>
+          No favorites! Please return to the home page or enter a query in the
+          search bar to add recipes to your favorites.
+        </h3>
+      )}
     </>
-  ) : (
-    <Redirect push to="/" />
   );
 }
 
 const mapStateToProps = (state) => {
   return {
     favorites: state.userStore.favorites,
+    favID: state.userStore.favID,
     isLoggedIn: state.userStore.loggedIn,
   };
 };
@@ -60,7 +104,7 @@ const mapDispatchToProps = {
   setActiveRecipe,
   searchRecipes,
   logout,
-  addToFavorites,
+  deleteFromFavorites,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

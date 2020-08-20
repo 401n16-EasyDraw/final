@@ -71,7 +71,6 @@ export const addToFavorites = (payload) => async (dispatch) => {
     `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites/${favID}`
   );
 
-  //console.log('Are we getting a response from here?', response.data)
   let foundRecipe = false;
 
   for (const item of response.data.list) {
@@ -81,15 +80,35 @@ export const addToFavorites = (payload) => async (dispatch) => {
     }
   }
 
-  console.log('Did we find recipe?', foundRecipe);
-  console.log('What is the payload?', payload);
   if (!foundRecipe) {
     const newList = [...response.data.list, payload.recipe];
     await axios.patch(
-      `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites/${payload.favID}`,
+      `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites/${favID}`,
       { list: newList }
     );
+
     dispatch(updateFavorites(newList));
   }
 };
+
+export const deleteFromFavorites = (payload) => async (dispatch) => {
+  console.log('Did this even triger?');
+  const { favID, recipe } = payload;
+  const response = await axios.get(
+    `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites/${favID}`
+  );
+
+  const newList = response.data.list.filter(
+    (item) => item.uri !== recipe.uri && item.label !== recipe.label
+  );
+
+  console.log('What is filtered list?', newList);
+  await axios.patch(
+    `https://cf-js-401-api-server.herokuapp.com/api/v1/favorites/${favID}`,
+    { list: newList }
+  );
+
+  dispatch(updateFavorites(newList));
+};
+
 export default userSlice.reducer;

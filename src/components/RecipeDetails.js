@@ -3,9 +3,17 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { addToFavorites, deleteFromFavorites } from '../store/user-slice';
 
 function RecipeDetails(props) {
-  const { activeRecipe, isLoggedIn } = props;
+  const {
+    activeRecipe,
+    isLoggedIn,
+    favorites,
+    addToFavorites,
+    deleteFromFavorites,
+    favID,
+  } = props;
   const ingredientsToRender = [];
 
   if (activeRecipe.ingredientLines) {
@@ -13,6 +21,19 @@ function RecipeDetails(props) {
       ingredientsToRender.push(<li key={`ingrd-${idx}`}>{ingredient}</li>);
     });
   }
+
+  const isInFavorites = () => {
+    let res = false;
+
+    for (const item of favorites) {
+      if (item.uri === activeRecipe.uri && item.label === activeRecipe.label) {
+        res = true;
+        break;
+      }
+    }
+
+    return res;
+  };
 
   return isLoggedIn && Object.keys(activeRecipe).length ? (
     <>
@@ -41,7 +62,24 @@ function RecipeDetails(props) {
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-          <Button className="btn-block">Save to Favorites</Button>
+          {isInFavorites() ? (
+            <Button
+              className="btn-block"
+              variant="danger"
+              onClick={() =>
+                deleteFromFavorites({ recipe: activeRecipe, favID })
+              }
+            >
+              Delete from Favorites
+            </Button>
+          ) : (
+            <Button
+              className="btn-block"
+              onClick={() => addToFavorites({ recipe: activeRecipe, favID })}
+            >
+              Add to Favorites
+            </Button>
+          )}
         </Card.Footer>
       </Card>
     </>
@@ -54,7 +92,13 @@ const mapStateToProps = (state) => {
   return {
     activeRecipe: state.recipeStore.activeRecipe,
     isLoggedIn: state.userStore.loggedIn,
+    favorites: state.userStore.favorites,
+    favID: state.userStore.favID,
   };
 };
 
-export default connect(mapStateToProps)(RecipeDetails);
+const mapDispatchToProps = {
+  addToFavorites,
+  deleteFromFavorites,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetails);
