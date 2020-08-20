@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import {
+  Navbar,
+  NavDropdown,
+  Nav,
+  Form,
+  FormControl,
+  Button,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { searchRecipes } from '../store/recipe-slice';
+import { searchRecipes, resetRecipeState } from '../store/recipe-slice';
 import '../styles/header.scss';
+import { logout } from '../store/user-slice';
 
 /**
  * Simple header content that shows up on every page. Contains title and nav bar
@@ -17,11 +25,11 @@ import '../styles/header.scss';
 function Header(props) {
   const [expanded, setExpanded] = useState(false);
   const [query, setQuery] = useState('');
-  const { searchRecipes, user, isLoggedIn } = props;
+  const { searchRecipes, user, isLoggedIn, logout, resetRecipeState } = props;
 
   const links = [
     { displayName: 'Home', url: '/' },
-    { displayName: 'Subpage', url: '/subpage' },
+    { displayName: 'Favorites', url: '/favorites' },
   ];
 
   const navLinks = [];
@@ -55,9 +63,23 @@ function Header(props) {
           </Nav>
           <Nav>
             {isLoggedIn ? (
-              <Nav.Link
-                style={{ color: 'white' }}
-              >{`Hi, ${user.name}!`}</Nav.Link>
+              <NavDropdown
+                title={`Hi, ${user.name}!`}
+                id="collasible-nav-dropdown"
+              >
+                <Link to="/favorites" className="dropdown-item">
+                  Favorites
+                </Link>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  onClick={() => {
+                    resetRecipeState();
+                    logout();
+                  }}
+                >
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
             ) : null}
             <Form
               inline
@@ -94,6 +116,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { searchRecipes };
+const mapDispatchToProps = { searchRecipes, logout, resetRecipeState };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

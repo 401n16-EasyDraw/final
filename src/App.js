@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
+import Favorites from './components/Favorites';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/base.scss';
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" exact component={LandingPage} />
             <ProtectedRoute path="/cook" exact component={RecipeList} />
             <Route path="/recipes/details" exact component={RecipeDetails} />
+            <Route path="/favorites" exact component={Favorites} />
             <Route path="*" component={() => '404 NOT FOUND'} />
           </Switch>
         </div>
