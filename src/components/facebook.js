@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FacebookLoginWithButton from 'react-facebook-login';
 import { Redirect } from 'react-router-dom';
-import { login, logout, findExistingFavorites } from '../store/user-slice';
+import { login, findExistingFavorites } from '../store/user-slice';
 
 function Facebook(props) {
   const { isLoggedIn, login, findExistingFavorites } = props;
@@ -20,8 +20,6 @@ function Facebook(props) {
     } else {
       console.error('error: failed to login');
     }
-
-    console.log('What is response?', response);
   };
 
   const componentClicked = () => console.log('clicked');
@@ -48,6 +46,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { login, logout, findExistingFavorites };
+const mapDispatchToProps = { login, findExistingFavorites };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Facebook);

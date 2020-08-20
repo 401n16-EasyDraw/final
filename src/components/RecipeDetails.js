@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { addToFavorites, deleteFromFavorites } from '../store/user-slice';
-import { resetSearchState } from '../store/recipe-slice';
 
 function RecipeDetails(props) {
   const {
@@ -15,12 +14,7 @@ function RecipeDetails(props) {
     deleteFromFavorites,
     favID,
     searching,
-    resetSearchState,
   } = props;
-
-  useEffect(() => {
-    resetSearchState();
-  }, [searching, resetSearchState]);
 
   const ingredientsToRender = [];
 
@@ -71,15 +65,16 @@ function RecipeDetails(props) {
             </a>
           </Card.Text>
           <div
-            class="fb-share-button"
+            className="fb-share-button"
             data-href={activeRecipe.url}
             data-layout="button_count"
             data-size="large"
           >
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href={`https://www.facebook.com/sharer/sharer.php?u=${activeRecipe.url}`}
-              class="fb-xfbml-parse-ignore"
+              className="fb-xfbml-parse-ignore"
             >
               Share to Facebook
             </a>
@@ -125,6 +120,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   addToFavorites,
   deleteFromFavorites,
-  resetSearchState,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeDetails);
