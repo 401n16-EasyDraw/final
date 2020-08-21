@@ -47,7 +47,8 @@ npm test
 
 ### UML
 
-![UML](midterm-uml.png)
+`https://docs.google.com/spreadsheets/d/1DhL4o6PAtwggICl5NjSlP4FIOgK-zNkent1fZbM_Fk4/edit?usp=sharing`
+
 
 ### Wireframe
 
